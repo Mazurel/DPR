@@ -22,8 +22,8 @@ class DPR_1024(DPRBase):
     size = (1024, 1024)
 
     # Public methods
-    def __init__(self):
-        super().__init__()
+    def __init__(self, target_size=None):
+        super().__init__(target_size)
         self.network = DPR_1024._loadModel()
 
     # TODO: Consider returning LAB Color mapped images
@@ -37,7 +37,7 @@ class DPR_1024(DPRBase):
         outputImg = DPRBase._output2Lab(labImage, noutputImg)
         resultLab = cv2.cvtColor(outputImg, cv2.COLOR_LAB2RGB)
         resultImage = cv2.resize(resultLab, DPR_1024.size)
-        return cv2.cvtColor(labImage, cv2.COLOR_LAB2RGB), resultImage
+        return self.resize_to_target(cv2.cvtColor(labImage, cv2.COLOR_LAB2RGB)), self.resize_to_target(resultImage)
 
     # Private helper methods
     @staticmethod

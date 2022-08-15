@@ -24,8 +24,9 @@ class DPRBase:
     modelFolder = os.path.join(myPath, 'trained_model/')
 
     # Public methods
-    def __init__(self):
+    def __init__(self, target_size=None):
         self.lights = sorted(map(lambda f: os.path.join(self.lightsFolder, f), os.listdir(self.lightsFolder)))
+        self.target_size = target_size
 
     def lightsAmount(self) -> int:
         return len(self.lights)
@@ -38,6 +39,12 @@ class DPRBase:
 
     def append_light(self, lightPath: str):
         self.lights.append(lightPath)
+
+    def resize_to_target(self, img):
+        if self.target_size is None:
+            return img
+
+        return cv2.resize(img, self.target_size)
 
     # Private helper methods
     @staticmethod
