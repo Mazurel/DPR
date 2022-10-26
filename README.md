@@ -18,7 +18,7 @@ from DPR import DPR_512
 IMAGE = "test.png"
 
 dpr = DPR_512()
-input_image, output_image = dpr.relighten(IMAGE)
+input_image, output_image = dpr.random_relighten(IMAGE)
 
 # Now images represented as numpy arrays are in proper variables.
 # For example, you can use them like so:
