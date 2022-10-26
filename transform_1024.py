@@ -9,10 +9,11 @@ import os
 import torch
 import cv2
 
-from transfrom_base import DPRBase
+from transform_base import DPRBase
 
 # For loading model
 from model.defineHourglass_1024_gray_skip_matchFeature import *
+
 
 class DPR_1024(DPRBase):
     '''
@@ -55,11 +56,22 @@ class DPR_1024(DPRBase):
 
 # Simple example:
 
+# Simple example:
+
 if __name__ == "__main__":
     from matplotlib import pyplot as plt
+    from pathlib import Path
+    import cv2
+
+    parser = ArgumentParser()
+    parser.add_argument("image_in", type=Path, help="Path to image that will be transformed")
+    parser.add_argument("image_out", type=Path, help="Path where new image will be written")
+    args = parser.parse_args()
 
     dpr = DPR_1024()
-    i, o = dpr.random_relighten("./data/obama.jpg")
+    i, o = dpr.random_relighten(args.image_in.as_posix())
+
+    cv2.imwrite(args.image_out.as_posix(), cv2.cvtColor(o, cv2.COLOR_RGB2BGR))
 
     plt.figure("Before")
     plt.imshow(i)
